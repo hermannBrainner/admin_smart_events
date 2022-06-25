@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "695188899443",
+    "project_id": "smart-events-eb8d6",
+    "storage_bucket": "smart-events-eb8d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695188899443:android:5a5b28262c00f4a0954c06",
+        "android_client_info": {
+          "package_name": "com.brainpower.admin_smart_events"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695188899443-i8b5qf82u4prlqa41225oal401ggk3iv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPL2rAafkQwgxy9hK2an-tyooIqZOnJLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695188899443-i8b5qf82u4prlqa41225oal401ggk3iv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "695188899443-u4g330u03jjaf14lc7iv3du3bfm2sqdj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.brainpower.smartevents"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695188899443:android:9f2ce820351a9d4a954c06",
+        "android_client_info": {
+          "package_name": "com.brainpower.smart_events"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695188899443-i8b5qf82u4prlqa41225oal401ggk3iv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPL2rAafkQwgxy9hK2an-tyooIqZOnJLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695188899443-i8b5qf82u4prlqa41225oal401ggk3iv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "695188899443-u4g330u03jjaf14lc7iv3du3bfm2sqdj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.brainpower.smartevents"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
