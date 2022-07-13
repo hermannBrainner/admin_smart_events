@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:flutter/material.dart';
+
 import '/mode_Compte/exports/main.dart';
 import '/outils/fonctions/fonctions.dart';
 import '/outils/size_configs.dart';
@@ -14,7 +14,6 @@ import '/providers/theme/primary_bouton.dart';
 import '/providers/theme/primary_box_decoration.dart';
 import '/providers/theme/primary_loading_bouton.dart';
 import '/providers/theme/strings.dart';
-import 'package:flutter/material.dart';
 
 Widget resetTile(
     {required CeremonieProvider provider,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-import '/mode_Compte/home_compte/main.dart';
+import '/main_modes/main.dart';
 import '/outils/extensions/string.dart';
 import '/outils/fonctions/fonctions.dart';
 import '/outils/size_configs.dart';
@@ -168,7 +168,7 @@ class _ConnexionState extends State<Connexion> {
                                         if (isAdmin) {
                                           Navigator.pushNamedAndRemoveUntil(
                                               context,
-                                              HomeCompte.routeName,
+                                              ListeModes.routeName,
                                               (Route<dynamic> route) => false);
                                         } else {
                                           await _auth.signOut();

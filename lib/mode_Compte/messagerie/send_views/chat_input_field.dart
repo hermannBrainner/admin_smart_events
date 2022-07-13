@@ -15,16 +15,14 @@ import '/outils/size_configs.dart';
 import '/providers/theme/elements/main.dart';
 
 class ChatInputField extends StatefulWidget {
-  final ChatMessage? msgToReply;
-  final String idcurrentMember;
+
+  final String idSender;
+  final String idReceiver;
   List<MessageComplet> allChats;
-  Function removePanel;
   ChatInputField(
       {Key? key,
-      required this.removePanel,
-      required this.idcurrentMember,
-      required this.allChats,
-      this.msgToReply})
+      required this.idSender,
+      required this.allChats, required this.idReceiver, })
       : super(key: key);
   @override
   _ChatInputFieldState createState() => _ChatInputFieldState();
@@ -59,9 +57,9 @@ class _ChatInputFieldState extends State<ChatInputField> {
         isLoading = true;
       });
 
-      await ChatController().saveChatWithImage(
+      await Chats().saveChatWithImage(
         context: context,
-        idcurrentMember: widget.idcurrentMember,
+        idcurrentMember: widget.idSender,
         file: imageFile!,
       );
     }
@@ -75,12 +73,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
-        /*  boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 4),
-            blurRadius: 32,
-            color: Color(0xFF087949).withOpacity(0.08),
-          ),],*/
+
       ),
       child: SafeArea(
         child: Row(
@@ -130,7 +123,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
               ),
             ),
             Visibility(
-              visible: chatCtrl.text.isEmpty /*!boutonVisible*/,
+              visible: chatCtrl.text.isEmpty ,
               child: IconButton(
                   padding: EdgeInsets.zero,
                   icon: Icon(
@@ -163,7 +156,8 @@ class _ChatInputFieldState extends State<ChatInputField> {
 
                     ChatMessage c = ChatMessage(
                         id: idChat,
-                        idSender: widget.idcurrentMember,
+                        idSender: widget.idSender,
+                        idReceiver: widget.idReceiver,
                         text: textMessage ?? "",
                         date: Timestamp.fromDate(DateTime.now()));
 
@@ -172,7 +166,6 @@ class _ChatInputFieldState extends State<ChatInputField> {
                     clearTextInput();
                     setState(() {
                       textMessage = null;
-                      widget.removePanel();
                       SystemChannels.textInput.invokeMethod('TextInput.hide');
                     });
                   }),

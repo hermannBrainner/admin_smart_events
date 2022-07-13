@@ -30,6 +30,10 @@ extension TimeTools on Timestamp {
     return this.toDate().isToday();
   }
 
+  String toStringDMY() {
+    return this.toDate().toStringDMY();
+  }
+
   String toStringComplete() {
     return this.toDate().toStringComplete();
   }
@@ -54,6 +58,11 @@ extension TimeTools on Timestamp {
 }
 
 extension TimeTools_DateTime on DateTime {
+
+  String toStringDMY(){
+    return DateFormat('dd/MM/yyyy').format(this);
+  }
+
   String toStringComplete() {
     return DateFormat('dd.MM.yyyy HH:mm:ss').format(this);
   }

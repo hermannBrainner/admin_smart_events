@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -29,6 +32,7 @@ import '/providers/authentification_provider.dart';
 import '/providers/ceremonie.dart';
 import '/providers/theme.dart';
 import '/providers/user_app.dart';
+import 'services/notifs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -247,3 +251,5 @@ class MonApp extends StatelessWidget {
     );
   }
 }
+
+

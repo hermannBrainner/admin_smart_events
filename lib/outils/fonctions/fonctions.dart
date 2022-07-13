@@ -27,11 +27,7 @@ envoieSMS(BuildContext context, {required String message}) async {
   await Share.share(message,
       sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
 
-  /*String _result = await sendSMS(message: message, recipients: [ ])
-      .catchError((onError) {
-    print(onError);
-  });
-  print(_result);*/
+
 }
 
 blackOrWhite_formLuminance(Color color) {

@@ -119,6 +119,9 @@ class UserApp {
     return await Future.wait(
         this.idsFilleuls.map((i) async => await Filleul.getById(i)));
   }
+  String get nomPrenom {
+    return this.prenom.trim().upperDebut() + " " + this.nom.trim().toUpperCase();
+  }
 
   static Future<bool> exists(String inEmail) async {
     var doc = (await collection.get()).docs.firstWhereOrNullListe((element) =>

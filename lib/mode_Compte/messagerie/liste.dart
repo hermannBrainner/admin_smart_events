@@ -17,9 +17,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  bool displayReply = false;
   bool displayAscenseur = false;
-  ChatMessage? msgeToReply;
   bool dejaRefresh = false;
 
   final ScrollController scroll = new ScrollController();
@@ -58,30 +56,8 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     scroll.addListener(listenScrolling);
-    msgeToReply = null;
     displayAscenseur = false;
-    displayReply = false;
     dejaRefresh = false;
-  }
-
-  void removePanelReply() {
-    setState(() {
-      msgeToReply = null;
-      displayReply = false;
-    });
-  }
-
-  void unShowPanelReply() {
-    setState(() {
-      displayReply = false;
-    });
-  }
-
-  void showPanelReply(ChatMessage msge) {
-    setState(() {
-      msgeToReply = msge;
-      displayReply = true;
-    });
   }
 
   @override
@@ -97,15 +73,12 @@ class _BodyState extends State<Body> {
             } else {
               List<ChatMessage> allMessages = qs.data!;
               List<MessageComplet> allComplets =
-                  ChatController().transformChats(allMessages);
+                  Chats.transformChats(allMessages);
 
-              for (MessageComplet msge in allComplets) {
-                // write( msge.chatMessage.text ,msge.chatMessage.date.toStringComplete());
-              }
+
 
               if (!dejaRefresh && allMessages.isNotEmpty) {
-                ChatController().majLecture(
-                    allMessages, allMessages[allMessages.length - 1], context);
+                Chats.majLus(allMessages, provider.userApp?.id ?? "");
                 dejaRefresh = true;
               }
               return Stack(
@@ -122,7 +95,7 @@ class _BodyState extends State<Body> {
                             itemCount: allComplets.length,
                             itemBuilder: (context, index) => MessageView(
                               mgeComplet: allComplets[index],
-                              idcurrentMember: provider.userApp?.id ?? "",
+                              idSender: provider.userApp?.id ?? "",
                             ),
                           ),
                         ),
@@ -134,10 +107,9 @@ class _BodyState extends State<Body> {
                             padding:
                                 const EdgeInsets.only(bottom: 50.0, top: 5),
                             child: ChatInputField(
-                              idcurrentMember: provider.userApp?.id ?? "",
+                              idSender: provider.userApp?.id ?? "",
                               allChats: allComplets,
-                              msgToReply: msgeToReply,
-                              removePanel: removePanelReply,
+                              idReceiver: ChatMessage.idAMIN,
                             ),
                           ),
                         ],

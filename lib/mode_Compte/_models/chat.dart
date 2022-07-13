@@ -17,10 +17,13 @@ class ChatMessage {
   String text;
   final Timestamp date;
   String messageType;
+  bool chatLu;
   final MessageStatus? messageStatus;
 
   static const c_idSender = 'idSender';
   static const c_idReceiver = 'idReceiver';
+  static const c_chatLu = 'chatLu';
+
 
   static const idAMIN = "ADMIN";
 
@@ -32,15 +35,16 @@ class ChatMessage {
 
   ChatMessage(
       {required this.id,
-      required this.idSender,
-      this.text = '',
-      this.messageType = TEXTE,
-      this.messageStatus,
-      this.idReceiver = null,
-      required this.date});
+        required this.idSender,
+        this. chatLu = false,
+        this.text = '',
+        this.messageType = TEXTE,
+        this.messageStatus,
+        this.idReceiver = null,
+        required this.date});
 
   static CollectionReference collection =
-      FirebaseFirestore.instance.collection(nomCollectionMessages);
+  FirebaseFirestore.instance.collection(nomCollectionMessages);
 
   static Comparator<ChatMessage> comparator2 =
       (s1, s2) => s2.date.toDate().compareTo(s1.date.toDate());
@@ -48,7 +52,8 @@ class ChatMessage {
   static Comparator<ChatMessage> comparator =
       (s1, s2) => s1.date.toDate().compareTo(s2.date.toDate());
 
-  static Future<List<ChatMessage>> getByUser(String idAppUser) async {
+  static Future<List<ChatMessage>> getByUser(String idAppUser,
+      {bool bWantInitMsges = true}) async {
     List<ChatMessage> chatMessages = [];
 
     await collection.where(c_idSender, isEqualTo: idAppUser).get().then((snap) {
@@ -67,7 +72,7 @@ class ChatMessage {
       });
     }).catchError((e) {});
 
-    if (chatMessages.isEmpty) {
+    if (chatMessages.isEmpty && bWantInitMsges) {
       ChatMessage c1 = ChatMessage(
           id: (await getNewID(nomCollectionMessages)),
           idReceiver: idAppUser,
@@ -94,7 +99,6 @@ class ChatMessage {
     chatMessages.sort(comparator);
     return chatMessages;
   }
-
   static List<ChatMessage> qsToList(QuerySnapshot data, {int idx = 1}) {
     List<ChatMessage> all = [];
     data.docs.forEach((element) {
@@ -108,21 +112,13 @@ class ChatMessage {
     return all;
   }
 
-  ChatMessage fromSnapshot(DocumentSnapshot item) {
-    return ChatMessage(
-        id: item['id'],
-        idReceiver: item['idReceiver'],
-        idSender: (item['idSender'] ?? idAMIN),
-        text: item['text'],
-        messageType: (item['messageType'] ?? TEXTE),
-        messageStatus: item['messageStatus'],
-        date: item['date']);
-  }
+
 
   ChatMessage.fromJson(Map<String, dynamic> item)
       : this.id = item['id'],
         this.idSender = item['idSender'] ?? idAMIN,
         this.idReceiver = item['idReceiver'] ?? idAMIN,
+        this.chatLu = item[c_chatLu]??false,
         this.text = item['text'],
         this.messageType = item['messageType'] ?? TEXTE,
         this.messageStatus = item['messageStatus'],
@@ -134,6 +130,7 @@ class ChatMessage {
     data['idSender'] = idSender;
     data['idReceiver'] = idReceiver;
     data['text'] = text;
+    data[c_chatLu] = chatLu;
     data['messageType'] = messageType;
     data['messageStatus'] = messageStatus;
     data['date'] = date;

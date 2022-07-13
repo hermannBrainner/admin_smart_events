@@ -1,8 +1,8 @@
-import 'package:admin_smart_events/auth/sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/auth/sign_in.dart';
 import '/mode_Compte/_models/user_app.dart';
 import '/providers/user_app.dart';
 import 'splashscreen.dart';

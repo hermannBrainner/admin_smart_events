@@ -11,9 +11,9 @@ class TextMessage extends StatelessWidget {
       required this.message,
       this.messageAsk,
       required this.voisinnageChat,
-      required this.idcurrentMember})
+      required this.idSender})
       : super(key: key);
-  final String idcurrentMember;
+  final String idSender;
   final ChatMessage message;
   final ChatMessage? messageAsk;
   final NEIGHBORHOOD voisinnageChat;
@@ -22,7 +22,7 @@ class TextMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
-    bool isSender = message.idSender == idcurrentMember;
+    bool isSender = message.idSender == idSender;
 
     return Column(
       mainAxisSize: MainAxisSize.min,

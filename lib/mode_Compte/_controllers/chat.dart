@@ -4,14 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
+import '../_models/chat.dart';
 import '/outils/constantes/collections.dart';
 import '/outils/constantes/numbers.dart';
 import '/outils/constantes/strings.dart';
 import '/outils/fonctions/fonctions.dart';
-import '../_models/chat.dart';
 
-class ChatController {
-  bool deltaMaxAtteint(DateTime courant, DateTime autre) {
+class Chats {
+ static bool deltaMaxAtteint(DateTime courant, DateTime autre) {
     return courant.difference(autre) > deltaMinMsge;
   }
 
@@ -23,7 +23,7 @@ class ChatController {
     return allChats;
   }
 
-  List<MessageComplet> transformChats(List<ChatMessage> allChats) {
+ static List<MessageComplet> transformChats(List<ChatMessage> allChats) {
     List<MessageComplet> allComplets = [];
 
     for (ChatMessage msg in allChats) {
@@ -39,7 +39,7 @@ class ChatController {
     return new List.from(allComplets.reversed);
   }
 
-  bool wantDisplayHour(int idx, List<ChatMessage> chats) {
+ static bool wantDisplayHour(int idx, List<ChatMessage> chats) {
     DateTime precedentTemps;
 
     if (chats.length > 1 && idx > 0) {
@@ -60,27 +60,48 @@ class ChatController {
     return ChatMessage.collection.limit(5000).snapshots();
   }
 
-  int nonLus(var data, String idMembre) {
-    List<ChatMessage> allMessages = ChatMessage.qsToList(data, idx: 1);
 
-    //allMessages.reversed;
-    /*TODO :  A REVOIR
+  static  majLus(List<ChatMessage>chats, String idUser, {bool bForReceiver = true } )async{
 
-       ChatMessage? dernierLu = allMessages.firstWhereOrNull(
-        (element) => element.lastLecteurs!.cast<String>().contains(idMembre));
-    int rang = 0;
-    if (dernierLu != null) {
-      rang = allMessages.indexOf(dernierLu);
+    bool bForSender = !bForReceiver;
+
+    for(ChatMessage chatMessage in chats.where((element) => !element.chatLu).toList()){
+
+      if(bForReceiver && chatMessage.idReceiver==idUser ){
+        chatMessage.chatLu = true;
+        await chatMessage.save();
+      }
+
+      if(bForSender && chatMessage.idSender==idUser){
+        chatMessage.chatLu = true;
+        await chatMessage.save();
+      }
+
     }
-    return allMessages == 0 ? 0 : (allMessages.length - (rang + 1));
-    */
-    return 3;
+
   }
 
-  NEIGHBORHOOD quelPosition(
-    List<ChatMessage> allMsgs,
-    int idx,
-  ) {
+
+  static  int nonLus(List<ChatMessage>chats, String idUser, {bool bForReceiver = true } ) {
+
+    bool bForSender = !bForReceiver;
+
+    if(bForReceiver){
+      return chats.where((chatMessage) => (chatMessage.idReceiver==idUser)&& (!chatMessage.chatLu)  ).toList().length;
+    }
+
+    if(bForSender){
+      return chats.where((chatMessage) => (chatMessage.idSender==idUser)&& (!chatMessage.chatLu)  ).toList().length;
+    }
+
+    return 0;
+
+  }
+
+ static NEIGHBORHOOD quelPosition(
+      List<ChatMessage> allMsgs,
+      int idx,
+      ) {
     ChatMessage currentC = allMsgs[idx];
     ChatMessage avantC;
     ChatMessage nextC;
@@ -180,39 +201,12 @@ class ChatController {
     return pos;
   }
 
-  majLecture(List<ChatMessage> allMsg, ChatMessage dernierChatListe,
-      BuildContext context) async {
-/*    List<ChatMessage> derniersChatLus = [];
 
-    derniersChatLus = allMsg
-        .where((c) => c.lastLecteurs!
-            .cast<String>()
-            .contains(Adherent.courrant(context).id))
-        .toList();
-    derniersChatLus.remove(dernierChatListe);
-
-    for (ChatMessage c in derniersChatLus) {
-      c.lastLecteurs!.remove(Adherent.courrant(context).id);
-      await c.save();
-    }
-
-    if (!dernierChatListe.lastLecteurs!
-        .contains(Adherent.courrant(context).id)) {
-      dernierChatListe.lastLecteurs!.add(Adherent.courrant(context).id);
-      await dernierChatListe.save();
-    }*/
-  }
-
-  /*Future<void> create(  ChatMessage message,
-      RoundedLoadingButtonController controller, BuildContext context) async {
-
-    await message.save().then((value) => controller.success());
-  }*/
 
   saveChatWithImage(
       {required String idcurrentMember,
-      required File file,
-      required BuildContext context}) async {
+        required File file,
+        required BuildContext context}) async {
     String idChat = await getNewID(nomCollectionMessages);
 
     String chemin = mediaStorePath_Chats + cleanId(idChat);

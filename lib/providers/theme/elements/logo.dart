@@ -131,7 +131,8 @@ class Logo extends ThemeElements {
           MaterialPageRoute(builder: (context) => MessagesScreen()));
     } else if (ACTION_NAME == PLAN_SALLE) {
       File pdfPlanSalle = await BuildPlanSalle(dialogContext);
-
+      Navigator.pushReplacement(dialogContext,
+          MaterialPageRoute(builder: (context) => ExportsMainView()));
       Navigator.pushReplacement(
           dialogContext,
           MaterialPageRoute(
@@ -139,8 +140,7 @@ class Logo extends ThemeElements {
                     fichier: pdfPlanSalle,
                   )));
     } else if (ACTION_NAME == EXPORT) {
-      Navigator.pushReplacement(dialogContext,
-          MaterialPageRoute(builder: (context) => ExportsMainView()));
+
     } else if (ACTION_NAME == IMPORT) {
       Navigator.pushReplacement(dialogContext,
           MaterialPageRoute(builder: (context) => ImportsMainView()));

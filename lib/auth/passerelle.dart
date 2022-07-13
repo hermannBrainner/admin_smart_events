@@ -1,7 +1,7 @@
-import 'package:admin_smart_events/mode_Compte/home_compte/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/main_modes/main.dart';
 import '/mode_Compte/_models/user_app.dart';
 import '/outils/size_configs.dart';
 import '/providers/theme/elements/logo.dart';
@@ -29,7 +29,7 @@ class Passerelle extends StatelessWidget {
                     .withTexte(fontSize: SizeConfig.blockSizeHorizontal * 10),
               );
             } else {
-              return HomeCompte();
+              return ListeModes();
             }
           });
     }
